@@ -17,9 +17,9 @@ export default {
     //  The 'intro' property can be removed if using Phaser 3.21 or above. Keep it for earlier versions.
     output: {
         file: './dist/game.js',
-        name: 'Phaser Playground',
+        name: 'PhaserPlayground',
         format: 'iife',
-        sourcemap: true
+        sourcemap: true,
     },
 
     plugins: [
