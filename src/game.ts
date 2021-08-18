@@ -1,47 +1,71 @@
-import 'phaser';
+import * as Phaser from 'phaser';
 
-export default class Demo extends Phaser.Scene
-{
-    constructor ()
-    {
-        super('demo');
-    }
+export default class Playground extends Phaser.Scene {
+  character: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
-    preload ()
-    {
-        this.load.image('logo', 'assets/phaser3-logo.png');
-        this.load.image('libs', 'assets/libs.png');
-        this.load.glsl('bundle', 'assets/plasma-bundle.glsl.js');
-        this.load.glsl('stars', 'assets/starfields.glsl.js');
-    }
+  constructor() {
+    super('playground');
+  }
 
-    create ()
-    {
-        this.add.shader('RGB Shift Field', 0, 0, 800, 600).setOrigin(0);
+  preload() {
+    this.load.spritesheet('citizen', 'assets/character/walk.png', { frameWidth: 35, frameHeight: 52 });
+  }
 
-        this.add.shader('Plasma', 0, 412, 800, 172).setOrigin(0);
+  create() {
+    // Create character.
+    this.character = this.physics.add.sprite(100, 450, 'citizen');
+    this.character.setBounce(0.2);
+    this.character.setCollideWorldBounds(true);
 
-        this.add.image(400, 300, 'libs');
+    // Create character animations.
+    this.anims.create({
+      key: 'walk',
+      frames: this.anims.generateFrameNumbers('citizen', { start: 0, end: 30 }),
+      frameRate: 10,
+      repeat: -1,
+    });
 
-        const logo = this.add.image(400, 70, 'logo');
+    this.anims.create({
+      key: 'turn',
+      frames: [{ key: 'citizen', frame: 0 }],
+      frameRate: 20,
+    });
 
-        this.tweens.add({
-            targets: logo,
-            y: 350,
-            duration: 1500,
-            ease: 'Sine.inOut',
-            yoyo: true,
-            repeat: -1
-        })
-    }
+    // Create controls.
+    this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
+  update () {
+      if (this.cursors.left.isDown)
+      {
+          this.character.setVelocityX(-160);
+          this.character.anims.play('walk', true);
+      }
+      else if (this.cursors.right.isDown)
+      {
+          this.character.setVelocityX(160);
+          this.character.anims.playReverse('walk', true);
+      }
+      else
+      {
+          this.character.setVelocityX(0);
+          this.character.anims.play('turn');
+      }
+
+      if (this.cursors.up.isDown && this.character.body.touching.down)
+      {
+          this.character.setVelocityY(-330);
+      }
+  }
 }
 
 const config = {
-    type: Phaser.AUTO,
-    backgroundColor: '#125555',
-    width: 800,
-    height: 600,
-    scene: Demo
+  type: Phaser.AUTO,
+  backgroundColor: '#125555',
+  width: 800,
+  height: 600,
+  scene: Playground,
 };
 
 const game = new Phaser.Game(config);
