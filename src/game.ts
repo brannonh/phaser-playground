@@ -1,3 +1,5 @@
+/// <reference path="../node_modules/phaser/types/phaser.d.ts" />
+
 import * as Phaser from 'phaser';
 
 export default class Playground extends Phaser.Scene {
