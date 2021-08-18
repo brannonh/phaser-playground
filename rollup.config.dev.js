@@ -17,10 +17,9 @@ export default {
     //  The 'intro' property can be removed if using Phaser 3.21 or above. Keep it for earlier versions.
     output: {
         file: './dist/game.js',
-        name: 'MyGame',
+        name: 'Phaser Playground',
         format: 'iife',
-        sourcemap: true,
-        intro: 'var global = window;'
+        sourcemap: true
     },
 
     plugins: [
@@ -46,7 +45,7 @@ export default {
                 'node_modules/eventemitter3/**',
                 'node_modules/phaser/**'
             ],
-            exclude: [ 
+            exclude: [
                 'node_modules/phaser/src/polyfills/requestAnimationFrame.js'
             ],
             sourceMap: true,
