@@ -24,7 +24,7 @@ export default class Playground extends Phaser.Scene {
     this.anims.create({
       key: 'walk',
       frames: this.anims.generateFrameNumbers('citizen', { start: 0, end: 30 }),
-      frameRate: 10,
+      frameRate: 40,
       repeat: -1,
     });
 
@@ -41,13 +41,15 @@ export default class Playground extends Phaser.Scene {
   update () {
       if (this.cursors.left.isDown)
       {
+          this.character.flipX = false;
           this.character.setVelocityX(-160);
           this.character.anims.play('walk', true);
       }
       else if (this.cursors.right.isDown)
       {
+          this.character.flipX = true;
           this.character.setVelocityX(160);
-          this.character.anims.playReverse('walk', true);
+          this.character.anims.play('walk', true);
       }
       else
       {
@@ -55,9 +57,9 @@ export default class Playground extends Phaser.Scene {
           this.character.anims.play('turn');
       }
 
-      if (this.cursors.up.isDown && this.character.body.touching.down)
+      if (this.cursors.up.isDown && this.character.body.onFloor())
       {
-          this.character.setVelocityY(-330);
+          this.character.setVelocityY(-300);
       }
   }
 }
@@ -68,6 +70,13 @@ const config = {
   width: 800,
   height: 600,
   scene: Playground,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 900 },
+      debug: false,
+    }
+  },
 };
 
 const game = new Phaser.Game(config);
