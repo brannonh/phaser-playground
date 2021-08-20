@@ -1,8 +1,8 @@
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 
 export default {
 
@@ -35,7 +35,7 @@ export default {
         }),
 
         //  Parse our .ts source files
-        resolve({
+        nodeResolve({
             extensions: [ '.ts', '.tsx' ],
         }),
 
@@ -43,10 +43,10 @@ export default {
         commonjs({
             include: [
                 'node_modules/eventemitter3/**',
-                'node_modules/phaser/**'
+                'node_modules/phaser/**',
             ],
             exclude: [
-                'node_modules/phaser/src/polyfills/requestAnimationFrame.js'
+                'node_modules/phaser/src/polyfills/requestAnimationFrame.js',
             ],
             sourceMap: false,
             ignoreGlobal: true,
