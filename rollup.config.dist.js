@@ -20,6 +20,7 @@ export default {
         name: 'PhaserPlayground',
         format: 'iife',
         sourcemap: false,
+        intro: 'var global = window;',
     },
 
     plugins: [
