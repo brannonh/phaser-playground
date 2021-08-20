@@ -1,6 +1,4 @@
-/// <reference path="../node_modules/phaser/types/phaser.d.ts" />
-
-import * as Phaser from 'phaser';
+import 'phaser';
 
 export default class Playground extends Phaser.Scene {
   character: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -57,7 +55,7 @@ export default class Playground extends Phaser.Scene {
           this.character.anims.play('turn');
       }
 
-      if (this.cursors.up.isDown && this.character.body.onFloor())
+      if (this.cursors.space.isDown && this.character.body.onFloor())
       {
           this.character.setVelocityY(-300);
       }
